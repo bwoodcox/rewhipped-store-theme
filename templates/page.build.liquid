@@ -1,0 +1,40 @@
+{% assign current_product = all_products['cookie-box'] %}
+{% capture collection_grid %}{% if settings.listing_page_design != "disable-sidebar" and settings.listing_page_design == "left-right-sidebar" %}col-md-6 col-lg-6 col-xl-8{% else %}{% if settings.listing_page_design != "disable-sidebar" and settings.listing_page_design != "closed-sidebar"  %}col-md-8 col-lg-9 col-xl-10{% else %}col-md-12 col-lg-12 col-xl-12{% endif %}{% endif %}{% endcapture %}
+{% capture product_grid %}{% case settings.products_in_box_column %}{% when 'two' %}col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6{% when 'three' %}col-xs-12 col-sm-4 col-md-4 col-lg-4 col-xl-4{% when 'four' %}col-xs-6 col-sm-4 col-md-4 col-lg-3 col-xl-3{% when 'six' %}col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2{% when 'five' %}col-xs-6 col-sm-4 col-md-6 col-lg-4 col-xl-one-fifth{% when 'nine' %}col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-one-nine{% else %}{% endcase %}{% endcapture %}
+
+<script>
+  $(function() {
+    $("input[type=radio]").click(function() {
+      // if (sessionStorage.chooser == 1) $("#variant-form").action = "/products/cookie-box-we-choose";
+      $("#variant-form").submit();
+    });
+    // if (!sessionStorage.chooser) location.replace("/pages/who-chooses");
+  });
+</script>
+
+<div class="container">
+  <div class="row">
+    <aside class="{{ collection_grid }}" id="centerColumn">
+      <div class="title-box text-center"><h2 class="title-sides">How Many Do You Want?</h2></div>
+      <div class="collections-description text-center">Tell us how many of our delicious, handmade cookies you want.</div>
+      <div class="filters-row"></div>
+      <div class="product-listing row">
+        <form action="/products/cookie-box" method="get" id="variant-form">
+          {% for variant in current_product.variants %}
+            {% assign amount = variant.sku` | split: '_' | first | downcase %}
+            <div class="{{ product_grid }}">
+              <div class="product amount-selector">
+                <input id="{{ amount }}-dozen" type="radio" name="variant" value="{{ variant.id }}"/>
+                <label for="{{ amount }}-dozen" class="dozen {{ amount }}">
+                  <div class="banner">{{ variant.title }}</div>
+                  <div class="price">{{ variant.price | money_without_trailing_zeros }}</div>
+                </label>
+              </div>
+            </div>
+          {% endfor %}
+        </form>
+      </div>
+      <div class="fill-a-box-footer-msg text-center">For orders over 5 dozen, please call us at 801.414.1792.</div>
+    </aside>
+  </div>
+</div>

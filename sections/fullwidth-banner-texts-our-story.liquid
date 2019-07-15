@@ -1,0 +1,207 @@
+<section class="banner-one-product container-fluid content nomargin offset-top-0" data-section-id="{{ section.id }}" data-section-type="cateringwithbanners-section">
+  <div class="row">
+    <div class="text-block text-center">
+      <h2 class="title-sides">{{ section.settings.section_title }}</h2>
+    </div>
+  </div>
+  {% if section.blocks.size > 0 %}
+  {% for block in section.blocks limit: section.blocks.size %}
+  <div class="row" data-block-id="div-banner-content-{{ block.id }}">
+    <div class="col-sm-12 col-md-6">
+      <div class="bannerOneProduct slick-arrow-bottom-wrapper">
+        <img class="img-responsive" src="{{ block.settings.image | img_url: '682x570' }}" alt="{{ block.settings.image.alt }}">
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <div class="product-content product-info__title">
+        {% if block.settings.show_title_1 %}<h2 class="title">{{ block.settings.title_1 }}</h2>{% endif %}
+        <div class="banner__text">{{ block.settings.content_1 }}</div>
+        <!-- product button -->
+        <!--div class="clearfix ">
+          <div class="pull-left">
+            <div class="number input-counter">
+              <span class="minus-btn">-</span>
+              <input type="text" name="quantity" value="1" max="{{ inv_qua }}"/>
+              <span class="plus-btn">+</span>
+            </div>
+          </div-->
+          <!--div class="pull-left"-->
+            <!-- product button -->
+            <!--a href="#" class="btn btn-left btn--ys btn--l addtocart">{{ 'products.product.add_to_cart_html' | t }}</a-->
+            <!-- /product button -->
+          <!--/div-->
+      </div>
+    </div>
+  </div>
+  {% if block.settings.show_text_area_banner %}
+  <div class="content nomargin ">
+    <div class="container-fluid">
+      <div class="row" data-block-id="div-text-content-{{ block.id }}">
+        <div class="text-block-with-bg">
+          {% if block.settings.show_title_2 %}<h3>{{ block.settings.title_2 }}</h3>{% endif %}
+          {{ block.settings.content_2 }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+  [data-block-id~="div-banner-content-{{ block.id }}"] {
+    background: {{ block.settings.background_color_1 }};
+  }
+  [data-block-id~="div-text-content-{{ block.id }}"] {
+    background: {{ block.settings.background_color_2 }};
+  }
+  </style>
+  {% endif %}
+  {% endfor %}
+  {% else %}
+  <span style="display: flex; justify-content: center;">This section doesn’t currently include any content. Add content to this section using the sidebar.</span>
+  {% endif %}
+</section>
+<style>
+  [data-section-id~="{{ section.id }}"] {
+  background: {{ section.settings.background_color }};
+  }
+  .content .container-fluid .text-block-with-bg h3 {
+    color: {{ section.settings.title_text_color }};
+    font-family: {{ section.settings.title_text_font_family }}
+  }
+  .content .container-fluid .text-block-with-bg a {
+    color: {{ settings.color_footerlinks }};
+  }
+  .content .container-fluid .text-block-with-bg a:hover {
+    color: {{ settings.color_footerlinksactive }};
+    text-decoration: none;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Our Story Banner Text",
+  "class": "index-section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "My Page Title"
+    },
+    {
+      "type": "color",
+      "id": "title_text_color",
+      "label": "Title Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title_text_font_family",
+      "label": "Title Font Family",
+      "default": "Helvetica, sans-serif;"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "banner_item",
+      "name": "Banner",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_text_area_banner",
+          "label": "Show Text Areas Banner",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Banner Section Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Image Position",
+          "options": [
+            {
+              "value": "right",
+              "label": "Right"
+            },
+            {
+              "value": "left",
+              "label": "Left"
+            }
+          ],
+          "default":   "left"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_title_1",
+          "label": "Show Title",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "background_color_1",
+          "label": "Section Background Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "text",
+          "id": "title_1",
+          "label": "Title 1",
+          "default": "About Us"
+        },
+        {
+          "type": "textarea",
+          "id": "content_1",
+          "label": "Text 1",
+          "default": "<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaturLorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<\/p><p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaturLorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<\/p>"
+        },
+        {
+          "type": "header",
+          "content": "Text Section Content"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_title_2",
+          "label": "Show Title",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "background_color_2",
+          "label": "Section Background Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "text",
+          "id": "title_2",
+          "label": "Title 2",
+          "default": "About section"
+        },
+        {
+          "type": "textarea",
+          "id": "content_2",
+          "label": "Text 2",
+          "default": "<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaturLorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<\/p><p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaturLorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<\/p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Story Banner Texts",
+      "category": "Banner"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,70 @@
+{% assign pagination_limit_const = settings.pagination_limit | times: 1 %}{% assign supercollection = collection.products %}
+{% capture collection_grid %}{% if settings.listing_page_design != "disable-sidebar" and settings.listing_page_design == "left-right-sidebar" %}col-md-6 col-lg-6 col-xl-8{% else %}{% if settings.listing_page_design != "disable-sidebar" and settings.listing_page_design != "closed-sidebar"  %}col-md-8 col-lg-9 col-xl-10{% else %}col-md-12 col-lg-12 col-xl-12{% endif %}{% endif %}{% endcapture %}
+
+{% comment %}{% assign collection_grid = "col-md-12 col-lg-12 col-xl-12" %}{% endcomment %}
+{% comment %}{% assign product_grid = "col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" %}{% endcomment %}
+{% capture product_grid %}{% case settings.products_in_column %}{% when 'two' %}col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6{% when 'three' %}col-xs-6 col-sm-4 col-md-6 col-lg-4 col-xl-4{% when 'four' %}col-xs-6 col-sm-4 col-md-4 col-lg-3 col-xl-3{% when 'six' %}col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2{% when 'five' %}col-xs-6 col-sm-4 col-md-6 col-lg-4 col-xl-one-fifth{% when 'nine' %}col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-one-nine{% else %}{% endcase %}{% endcapture %}
+
+<div class="container">
+  <div class="row">
+
+    {% if settings.listing_page_design != "disable-sidebar" %}
+    <aside class="{% if settings.listing_page_design == "left-right-sidebar" %}col-md-3{% else %}col-md-4{% endif %} col-lg-3 col-xl-2 collection-list{% if settings.listing_page_design == "closed-sidebar" %} without-left-col{% endif %}" id="leftColumn">
+      {% if settings.listing_page_design != "right-sidebar" %}<div class="move-height"></div>{% endif %}
+      {% if settings.listing_page_design == "left-sidebar" or settings.listing_page_design == "closed-sidebar" %}{% include "collection-sidebar" %}{% endif %}
+      {% if settings.listing_page_design == "left-right-sidebar" %}{% include "collection-sidebar-left" %}{% endif %}
+    </aside>
+    {% endif %}
+
+    <aside class="{{ collection_grid }}" id="centerColumn">
+      <div class="title-box text-center"><h2 class="title-sides text-uppercase">{{ collection.title }}</h2></div>
+      {% if settings.show_collection_description %}
+      <div class="collections-description text-center">{{ collection.description }}</div>
+      {% endif %}
+
+      <div id="listing-point"></div>
+      {% include "collection-toolbar" current_grid: current_pagination_limit %}
+
+      <div id="centerCol"><div class="product-listing row">
+        {% for product in collection.products %}
+        <div class="{{ product_grid }}">
+          {% include "product-grid-item" hoverzoom: false %}
+        </div>
+        {% endfor %}
+      </div></div>
+    </aside>
+  </div>
+</div>
+
+{% if settings.enable_scroll_sidebar and settings.listing_page_design != "closed-sidebar" %}
+<script>
+  jQuery( document ).ready(function(){
+    if(jQuery(".collection-list").length == 0 ) {
+      return false;
+    }
+
+    setTimeout(calcSidebarPosition, 300);
+    window.onscroll = function() {
+      if(window.innerWidth < 992 ) {
+        jQuery(".move-height").css('height', 0);
+        return false;
+      }
+      calcSidebarPosition();
+    }
+    jQuery(window).resize(calcSidebarPosition);
+    function calcSidebarPosition() {
+      if(window.innerWidth < 992 ) {
+        jQuery(".move-height").css('height', 0);
+        return false;
+      }
+      var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+      var start = jQuery(".collection-list").position().top;
+      var last = jQuery("#listing-point").position().top;
+      var stuckHeight = jQuery(".stuck-nav").height();
+      var delta = Math.max(scrolled - start + stuckHeight + 20, 0);
+      delta = Math.min(delta, last);
+      jQuery(".move-height").css('height', delta);
+    }
+  });
+</script>
+{% endif %}

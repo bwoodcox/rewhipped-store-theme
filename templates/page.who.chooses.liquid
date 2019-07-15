@@ -1,0 +1,51 @@
+{% assign current_product = all_products['cookie-box'] %}
+{% assign choices = "We Choose,You Choose"  | split: ',' %}
+{% capture collection_grid %}{% if settings.listing_page_design != "disable-sidebar" and settings.listing_page_design == "left-right-sidebar" %}col-md-6 col-lg-6 col-xl-8{% else %}{% if settings.listing_page_design != "disable-sidebar" and settings.listing_page_design != "closed-sidebar"  %}col-md-8 col-lg-9 col-xl-10{% else %}col-md-12 col-lg-12 col-xl-12{% endif %}{% endif %}{% endcapture %}
+{% capture product_grid %}{% case settings.products_in_box_column %}{% when 'two' %}col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6{% when 'three' %}col-xs-12 col-sm-4 col-md-4 col-lg-4 col-xl-4{% when 'four' %}col-xs-6 col-sm-4 col-md-4 col-lg-3 col-xl-3{% when 'six' %}col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2{% when 'five' %}col-xs-6 col-sm-4 col-md-6 col-lg-4 col-xl-one-fifth{% when 'nine' %}col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-one-nine{% else %}{% endcase %}{% endcapture %}
+
+<script>
+  $(function() {
+    $("input[type=radio]").click(function() {
+      $.ajax({
+        type: "POST",
+        url: '/cart.js',
+        data: {"attributes[chooser]": event.target.value},
+        success: function(data) {
+          $("#chooser-form").submit();
+        },
+        dataType: 'json'
+      });
+      // if (typeof(Storage) !== "undefined") {
+      //   sessionStorage.chooser = Number.parseInt(event.target.value);
+      //   $("#chooser-form").submit();
+      // } else {
+      //   alert("You will need to update your browser in order to finish the order process.");
+      // }
+    });
+  });
+</script>
+
+<div class="container">
+  <div class="row">
+    <aside class="{{ collection_grid }}" id="centerColumn">
+      <div class="title-box text-center"><h2 class="title-sides">Who Chooses Your Cookies?</h2></div>
+      <div class="collections-description text-center">It's up to you! We can choose your cookies for you. Or if you want control, you can choose.</div>
+      <div class="filters-row"></div>
+      <div class="product-listing row">
+        <form action="/pages/spin-up-a-box" method="get" id="chooser-form">
+          {% for choice in choices %}
+            {% assign chooser = choice | split: ' ' | first | downcase %}
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+              <div class="product who-chooses-selector">
+                <input id="{{ chooser }}-choose" type="radio" name="chooser" value="{{ chooser }}-choose"/>
+                <label for="{{ chooser }}-choose" class="choices {{ chooser }}">
+                  <div class="banner">{{ choice }}</div>
+                </label>
+              </div>
+            </div>
+          {% endfor %}
+        </form>
+      </div>
+    </aside>
+  </div>
+</div>

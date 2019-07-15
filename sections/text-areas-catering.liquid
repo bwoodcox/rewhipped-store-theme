@@ -1,0 +1,87 @@
+<section class="content{% unless section.settings.top_indent %} nomargin{% endunless %}" data-section-id="{{ section.id }}">
+  <div class="container-fluid">
+    <div class="row">
+      {% if section.blocks.size > 0 %}
+        <div class="text-custom text-block-with-bg">
+          {% if section.show_heading %}<h2 class="text-center text-uppercase title-under">{{ section.settings.title }}</h2>{% endif %}
+          {% for block in section.blocks limit: section.blocks.size %}
+            <h3 class="text-uppercase title-sides">{{ block.settings.section_title }}</h3>
+            {{ block.settings.content }}
+          {% endfor %}
+        </div>
+      {% else %}
+          <span style="display: flex; justify-content: center;">This section doesn’t currently include any content. Add content to this section using the sidebar.</span>
+      {% endif %}
+    </div>
+  </div>
+</section>
+<style>
+  [data-section-id~="{{ section.id }}"] {
+  background: {{ section.settings.bg_base_color }};
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Text Area",
+  "class": "index-section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Page Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_heading",
+      "label": "Show Heading",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "top_indent",
+      "label": "Top Indent",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "bg_base_color",
+      "label": "Background Color",
+      "default": "#fafafa"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_area",
+      "name": "Text Area 1",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Heading",
+          "default": "About section"
+        },
+        {
+          "type": "textarea",
+          "id": "content",
+          "label": "Text",
+          "default": "<p>Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaturLorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<\/p><p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaturLorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<\/p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text Block 4",
+      "category": "Text Section",
+      "blocks": [
+        {
+          "type": "text_area"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

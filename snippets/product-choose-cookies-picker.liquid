@@ -1,0 +1,113 @@
+<div class="clearfix"></div>
+<div class="row">
+  {% assign products = collections.flavors.products | sort: 'title' %}
+  {% for product in products %}
+  	{% assign cookie_title = product.title | split: ' ' | first | downcase %}
+  	<div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+	  <div class="cookie-selector row">
+        <input id="{{ cookie_title }}" type="radio" value="add-dozen"/>
+        <label for="{{ cookie_title }}" class="cookie build-tooltip" style="background: url({{ product.featured_image | product_img_url: '180x180' }}) 100% 100% no-repeat;">
+          <div class="ribbon"><span>{{ product.title }}</span></div>
+          <button type="button" class="btn btn--ys btn--xs btn-add"><span class="icon icon-add"></span></button>
+          <button type="button" class="btn btn--ys btn--xs btn-add-dozen"><span class="icon icon-add"></span>Dozen</button>
+          <button type="button" class="btn btn--ys btn--xs btn-subtract invisible"><span class="icon icon-remove"></span></button>
+          <div id="{{ cookie_title }}-qty" class="cookie-quantity invisible">0</div>
+        </label>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<script type="text/javascript">
+  $(function() {
+    var ONE_DOZEN = 12;
+    var totalQty = {{ product.selected_variant.barcode }} * ONE_DOZEN;
+    var currentQty = 0;
+    var cookieQtyElement, val;
+
+    $(".cookie-selector button.btn-add").click(function() {
+      cookieQtyElement = $(this).siblings().last();
+      val = parseInt(cookieQtyElement.text());
+      val++;
+      updateAndAlignQuantity(this);
+      currentQty++;
+      updateViewElements($(this));
+      cookieQtyElement.text(val);
+      cookieQtyElement.removeClass("invisible");
+    });
+
+    $(document).on("click", "button.btn-subtract", function() {
+      cookieQtyElement = $(this).siblings().last();
+      val = parseInt(cookieQtyElement.text());
+      val--;
+      updateAndAlignQuantity(this);
+      currentQty--;
+      updateViewElements($(this));
+      cookieQtyElement.text(val);
+    });
+
+    $(".cookie-selector button.btn-add-dozen").click(function() {
+      cookieQtyElement = $(this).siblings().last();
+      val = parseInt(cookieQtyElement.text());
+
+      val = val + ONE_DOZEN;
+      updateAndAlignQuantity(this);
+      currentQty = currentQty + ONE_DOZEN;
+      updateViewElements($(this));
+      cookieQtyElement.text(val);
+      cookieQtyElement.removeClass("invisible");
+    });
+
+    var updateViewElements = function(element) {
+      var isBoxFull = currentQty == totalQty ? true : false;
+      var canAddDozen = totalQty - currentQty >= ONE_DOZEN ? true : false;
+
+      if (element.hasClass("btn-add")) {
+        element.siblings(".btn-subtract").removeClass("invisible");
+        if (isBoxFull) {
+          $("button.btn-add").addClass("invisible");
+          $("button.btn-add-dozen").addClass("invisible");
+          $(".addtocart").removeClass("invisible");
+        }
+        if (!canAddDozen) $("button.btn-add-dozen").addClass("invisible");
+      } else if (element.hasClass("btn-add-dozen")) {
+        element.siblings(".btn-subtract").removeClass("invisible");
+        if (!canAddDozen) $("button.btn-add-dozen").addClass("invisible");
+        if (isBoxFull) {
+          $("button.btn-add").addClass("invisible");
+          $(".addtocart").removeClass("invisible");
+        }
+      } else if (element.hasClass("btn-subtract")) {
+        $("button.btn-add").removeClass("invisible");
+        $(".addtocart").addClass("invisible");
+        if (canAddDozen) $("button.btn-add-dozen").removeClass("invisible");
+      }
+
+      $("#selected-cookie-list").children().first().replaceWith("<div>"+currentQty+" of "+totalQty+" cookies filled.</div>");
+      return isBoxFull;
+    };
+    var updateAndAlignQuantity = function(element) {
+      if (val == 0) {
+        cookieQtyElement.removeClass("one");
+        cookieQtyElement.addClass("invisible");
+        $(element).addClass("invisible");
+        $("#"+element.dataset.cookieName).removeAttr("checked");
+      } else if (val == 1) {
+        cookieQtyElement.addClass("one");
+        cookieQtyElement.removeClass("single-digit");
+      } else if (val > 1 && val <= 9) {
+        cookieQtyElement.addClass("single-digit");
+        cookieQtyElement.removeClass("one");
+        cookieQtyElement.removeClass("ten");
+      } else if (val >= 10 && val <= 19) {
+        cookieQtyElement.addClass("ten");
+        cookieQtyElement.removeClass("twenty");
+        cookieQtyElement.removeClass("single-digit");
+      } else {
+        cookieQtyElement.addClass("twenty");
+        cookieQtyElement.removeClass("ten");
+        cookieQtyElement.removeClass("single-digit");
+      }
+    };
+  });
+</script>
