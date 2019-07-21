@@ -9,9 +9,16 @@
   {% endif %}
 </div>
 {% endif %}
-<div class="product-info__title">
+{% for image in product.images %}
+  {% if image.alt == "signature" %}
+    <div class="product-info__title">
+      <img src="{{ image.src | product_img_url: 'small' }}" alt="{{ image.alt }}">
+    </div>
+  {% endif %}
+{% endfor %}
+<!-- <div class="product-info__title">
   <h1 itemprop="name">{{ product.title }}</h1>
-</div>
+</div> -->
 {% if settings.show_product_vendor %}
 <div class="product-info__vendor" itemprop="brand">{{ product.vendor }}</div>
 {% endif %}
@@ -39,7 +46,7 @@
     {% if sale_on %}
     <span class="price-box__new">{{ product.price_min | money }}</span> <span class="price-box__old">{{ product.compare_at_price_min | money }}</span>
     {% else %}
-    <span>{{ product.price_min | money }}</span><div class="money-suffix">per dozen</div>
+    <span>{{ product.price_min | money }}</span><!--<div class="money-suffix">each</div>-->
     {% endif %}
   </div>
 
