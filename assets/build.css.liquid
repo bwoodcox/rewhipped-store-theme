@@ -6,7 +6,7 @@
   appearance: none;
   display: none;
 }
-.dozen, .choices {
+.pack, .choices {
   display: block;
   width: 320px;
   height: 320px;
@@ -23,7 +23,7 @@
   cursor: pointer;
   border-radius: 12px;
 }
-.dozen:hover, .cookie:hover, .choices:hover {
+.pack:hover, .cookie:hover, .choices:hover {
   -webkit-filter: none;
   -moz-filter: none;
   filter: none;
@@ -55,12 +55,12 @@
 .choices.you {
   background: url({{ 'woman-portrait.png' | file_img_url: '320x320' }}) 100% 100% no-repeat;
 }
-.amount-selector input:active +.dozen{opacity: 1;}
-.amount-selector input:checked +.dozen,
+.amount-selector input:active +.pack{opacity: 1;}
+.amount-selector input:checked +.pack,
 .cookie-selector input:active +.cookie{opacity: 1;}
 .cookie-selector input:checked +.cookie,
-.who-chooses-selector input:active +.dozen{opacity: 1;}
-.who-chooses-selector input:checked +.dozen {
+.who-chooses-selector input:active +.pack{opacity: 1;}
+.who-chooses-selector input:checked +.pack {
     -webkit-filter: none;
        -moz-filter: none;
             filter: none;
@@ -102,7 +102,7 @@
 //   -webkit opacity: 1;
 //   -moz-opacity: 1;
 // }
-.dozen:hover .banner, .choices:hover .banner {
+.pack:hover .banner, .choices:hover .banner {
   background: transparent;
   color: {{ settings.color_btntexthover }};
   transition: all 250ms ease-in;

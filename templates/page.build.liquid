@@ -24,8 +24,8 @@
             {% assign amount = variant.sku` | split: '_' | first | downcase %}
             <div class="{{ product_grid }}">
               <div class="product amount-selector">
-                <input id="{{ amount }}-dozen" type="radio" name="variant" value="{{ variant.id }}"/>
-                <label for="{{ amount }}-dozen" class="dozen {{ amount }}">
+                <input id="{{ amount }}-pack" type="radio" name="variant" value="{{ variant.id }}"/>
+                <label for="{{ amount }}-pack" class="pack" style="background: url({{ variant | img_url: '320x320' }}) 100% 100% no-repeat;">
                   <div class="banner">{{ variant.title }}</div>
                   <div class="price">{{ variant.price | money_without_trailing_zeros }}</div>
                 </label>
@@ -34,7 +34,7 @@
           {% endfor %}
         </form>
       </div>
-      <div class="fill-a-box-footer-msg text-center">For orders over 5 dozen, please call us at 801.414.1792.</div>
+      <div class="fill-a-box-footer-msg text-center">For event or catering orders, please call us at 801.666.6844 for special pricing.</div>
     </aside>
   </div>
 </div>
