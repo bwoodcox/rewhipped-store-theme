@@ -179,9 +179,16 @@
       {% endunless %}
     <!-- /label sale -->
     <!-- product name -->
-    <div class="product__inside__name">
+    {% for image in product.images %}
+      {% if image.alt == "signature" %}
+        <div class="product__inside__name">
+          <img src="{{ image.src | product_img_url: '100x' }}" alt="{{ image.alt }}">
+        </div>
+      {% endif %}
+    {% endfor %}
+    <!-- <div class="product__inside__name">
       <h2 class="product_title"><a href="{{ product.url | within: collection }}">{{ product.title }}</a></h2>
-    </div>
+    </div> -->
     <!-- /product name -->
     <!-- product description -->
     <!-- visible only in row-view mode  row-mode-visible-->
@@ -197,9 +204,9 @@
     <!-- product price -->
     {% if show_price %}
       {% if sale_on %}
-      	<div class="product__inside__price price-box"><div>{{ product.selected_or_first_available_variant.price | money }}{% if product.metafields.cart.process == "build_a_box" %}<div class="money-suffix"> per dozen</div>{% endif %}</div><div class="price-box__old">{{ product.selected_or_first_available_variant.compare_at_price | money }}{% if product.metafields.cart.process == "build_a_box" %}<div class="money-suffix"> per dozen</span>{% endif %}</div></div>
+      	<div class="product__inside__price price-box"><div>{{ product.selected_or_first_available_variant.price | money }}</div><div class="price-box__old">{{ product.selected_or_first_available_variant.compare_at_price | money }}{% if product.metafields.cart.process == "build_a_box" %}<div class="money-suffix"> per dozen</span>{% endif %}</div></div>
       {% else %}
-      	<div class="product__inside__price price-box baseprice"><div>{{ product.selected_or_first_available_variant.price | money }}{% if product.metafields.cart.process == "build_a_box" %}<div class="money-suffix"> per dozen</div>{% endif %}</div><div class="price-box__old hide"></div></div>
+      	<div class="product__inside__price price-box baseprice"><div>{{ product.selected_or_first_available_variant.price | money }}</div><div class="price-box__old hide"></div></div>
       {% endif %}
     {% endif %}
 

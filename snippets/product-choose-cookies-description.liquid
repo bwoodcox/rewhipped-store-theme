@@ -44,7 +44,7 @@
     <button type="button" class="btn btn--xs btn--ys btn-change-box" onclick="window.location.href='/pages/spin-up-a-box'">Change box size</button>
   {% else %}
     <div id="selected-cookie-list" class="visible">
-      <div>0 of {{ product.selected_variant.barcode | times: 12 | floor }} cookies filled.</div>
+      <div>0 of {{ product.selected_variant.barcode }} cookies filled.</div>
        <button type="button" class="btn btn--xs btn--ys btn-change-box" onclick="window.location.href='/pages/spin-up-a-box'">Change box size</button>
     </div>
   {% endif %}
