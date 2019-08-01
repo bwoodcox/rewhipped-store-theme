@@ -1,5 +1,6 @@
 {% comment %} Price to show. {% endcomment %}
 {% assign sale_on = false %}
+{% assign signature_found = false %}
 {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
   {% assign sale_on = true %}
 {% endif %}
@@ -181,14 +182,17 @@
     <!-- product name -->
     {% for image in product.images %}
       {% if image.alt == "signature" %}
+        {% assign signature_found = true %}
         <div class="product__inside__name">
-          <img src="{{ image.src | product_img_url: '100x' }}" alt="{{ image.alt }}">
+          <a href="{{ product.url | within: collection }}"><img src="{{ image.src | product_img_url: '100x' }}" alt="{{ image.alt }}"></a>
         </div>
       {% endif %}
     {% endfor %}
-    <!-- <div class="product__inside__name">
-      <h2 class="product_title"><a href="{{ product.url | within: collection }}">{{ product.title }}</a></h2>
-    </div> -->
+    {% if signature_found == false %}
+      <div class="product__inside__name">
+        <h2 class="product_title"><a href="{{ product.url | within: collection }}">{{ product.title }}</a></h2>
+      </div>
+    {% endif %}
     <!-- /product name -->
     <!-- product description -->
     <!-- visible only in row-view mode  row-mode-visible-->
