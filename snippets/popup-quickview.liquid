@@ -137,11 +137,18 @@ jQuery(function($) {
 		var _parent = '#quickViewModal';
 		$(_parent + ' .product_title').text(product.title);
 
+    for (i = 0; i < product.images.length ; i++) {
+      if (product.images[i].indexOf('signature') > 0) {
+        var image = product.images[i].slice(0, product.images[i].lastIndexOf(".")) + "_small" + product.images[i].slice(product.images[i].lastIndexOf("."), product.images[i].length);
+        $(_parent + ' .product_title').replaceWith("<img src=\"" + image + "\" class=\"product_title\">");
+      }
+    }
+
 		$(_parent + ' .rating').empty();
 		$(_parent + ' .rating').append("<span class=\"shopify-product-reviews-badge\" data-id=\"" + product.id + "\"></span>");
 
     // types
-    var PER_DOZEN = ['cookies'];
+    var PER_DOZEN = ['cookies','macarons'];
     var SPECIALTY = ['specialty cookies'];
     var STANDARD = ['pies','cookie box','valentine box'];
 

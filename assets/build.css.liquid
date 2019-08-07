@@ -1,4 +1,4 @@
-.amount-selector input, .cookie-selector input, .who-chooses-selector input {
+.amount-selector input, .cookie-selector input, .who-chooses-selector input, .choose-box-type-selector input {
   margin:0;
   padding:0;
   -webkit-appearance: none;
@@ -55,12 +55,24 @@
 .choices.you {
   background: url({{ 'woman-portrait.png' | file_img_url: '320x320' }}) 100% 100% no-repeat;
 }
+.choices.cookies {
+  background: url({{ 'cookies-in-case-side.png' | file_img_url: '320x320' }}) 100% 100% no-repeat;
+}
+.choices.macarons {
+  background: url({{ 'macs-in-case.png' | file_img_url: '320x320' }}) 100% 100% no-repeat;
+}
 .amount-selector input:active +.pack{opacity: 1;}
 .amount-selector input:checked +.pack,
 .cookie-selector input:active +.cookie{opacity: 1;}
 .cookie-selector input:checked +.cookie,
 .who-chooses-selector input:active +.pack{opacity: 1;}
 .who-chooses-selector input:checked +.pack {
+    -webkit-filter: none;
+       -moz-filter: none;
+            filter: none;
+}
+.choose-box-type-selector input:active +.pack{opacity: 1;}
+.choose-box-type-selector input:checked +.pack {
     -webkit-filter: none;
        -moz-filter: none;
             filter: none;
@@ -75,7 +87,7 @@
   padding-top: 20px;
 }*/
 
-.amount-selector .banner, .who-chooses-selector .banner {
+.amount-selector .banner, .who-chooses-selector .banner, .choose-box-type-selector .banner {
 /*  background: rgba(23,173,180,0.8);*/
 /*  background: rgba(172,36,38,0.8);*/
   background: {{ settings.color_btnbg }};
@@ -119,12 +131,13 @@
   background-image: -moz-linear-gradient(90deg, {{ settings.color_btnbg }}, #ff5858);
   position: absolute;
   height: 40px;
-  width: 70px;
+  width: auto;
   top: 0;
   right: 18px;
   color: {{ settings.color_btntext }};
   font-size: 24px;
   text-align: center;
+  padding: 0 5px;
 }
 .cookie {
   display: block;

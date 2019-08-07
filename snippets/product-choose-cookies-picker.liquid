@@ -1,6 +1,10 @@
+{% if cart.attributes["box_type"] == "cookie-box" %}
+  {% assign products = collections.meet-the-cookies.products | sort: 'title' %}
+{% else %}
+  {% assign products = collections.meet-the-macarons.products | sort: 'title' %}
+{% endif %}
 <div class="clearfix"></div>
 <div class="row">
-  {% assign products = collections.flavors.products | sort: 'title' %}
   {% for product in products %}
     {% if product.available %}
     	{% assign cookie_title = product.title | split: ' ' | first | downcase %}

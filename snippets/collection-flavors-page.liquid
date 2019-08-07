@@ -26,7 +26,8 @@
       {% include "collection-toolbar" current_grid: current_pagination_limit %}
 
       <div id="centerCol"><div class="product-listing row">
-        {% for product in collection.products %}
+        {% assign products = collection.products | sort: 'title' %}
+        {% for product in products %}
         <div class="{{ product_grid }}">
           {% include "product-grid-item" hoverzoom: false %}
         </div>
