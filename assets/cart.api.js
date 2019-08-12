@@ -129,7 +129,7 @@ Shopify.cartUpdateInfo = function(cart, cart_cell_id) {
   }
   //END BOLD
 
-  var formatMoney = "<span class='money'>${{amount_no_decimals}}</span>";
+  var formatMoney = "<span class='money'>${{amount}}</span>";
   if ((typeof cart_cell_id) === 'string') {
     var cart_cell = jQuery(cart_cell_id);
     if (cart_cell.length) {

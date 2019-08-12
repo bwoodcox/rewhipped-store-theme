@@ -1,3 +1,4 @@
+{% assign product_type = cart.attributes["box_type"] | split: '-' | first %}
 {% assign inv_man = product.selected_or_first_available_variant.inventory_management %}{% assign inv_qua = product.selected_or_first_available_variant.inventory_quantity %}
 {% if settings.show_product_sku or settings.show_product_quantity %}
 <div class="wrapper hidden-xs">
@@ -40,11 +41,11 @@
     {% endif %}
   </div>
   {% if cart.attributes["chooser"] == "we-choose" %}
-    <div id="we-choose-message" class="visible">We'll choose an assortment of our cookies to include in you box.</div>
+    <div id="we-choose-message" class="visible">We'll choose an assortment of our {{ product_type }} to include in you box.</div>
     <button type="button" class="btn btn--xs btn--ys btn-change-box" onclick="window.location.href='/pages/spin-up-a-box'">Change box size</button>
   {% else %}
     <div id="selected-cookie-list" class="visible">
-      <div>0 of {{ product.selected_variant.barcode }} cookies filled.</div>
+      <div>0 of {{ product.selected_variant.barcode }} {{ product_type }} filled.</div>
        <button type="button" class="btn btn--xs btn--ys btn-change-box" onclick="window.location.href='/pages/spin-up-a-box'">Change box size</button>
     </div>
   {% endif %}
@@ -161,7 +162,7 @@
       $(function() {
         if ({{ product.selected_variant.id }} != {{ product.variants[0].id }}) {
           $(".bold_options").addClass("hidden");
-          $(".gift-suggestion").removeClass("hidden");
+          //$(".gift-suggestion").removeClass("hidden");
         }
       });
 

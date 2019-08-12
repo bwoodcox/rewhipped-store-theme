@@ -157,9 +157,9 @@
 	transform-style: flat;
 }
 .product .product__action a:hover {
-	background-color: #d3222a;
-	background-image: -webkit-linear-gradient(-360deg, #d3222a, #ff5858);
-	background-image: linear-gradient(90deg, #d3222a, #ff5858);
+	background-color: #d22630;
+	background-image: -webkit-linear-gradient(-360deg, #d22630, #ff5858);
+	background-image: linear-gradient(90deg, #d22630, #ff5858);
 }
 .product .product__action a:hover:before, .product .product__action a:hover:after {
 	visibility: visible;
@@ -269,7 +269,7 @@
   position: absolute;
 }
 #storePickupApp .error, #storePickupApp .error p {
-  color: #d3222a !important;
+  color: #d22630 !important;
 }
 
 .product-info__description img {

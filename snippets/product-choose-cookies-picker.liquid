@@ -1,4 +1,5 @@
-{% if cart.attributes["box_type"] == "cookie-box" %}
+{% assign product_type = cart.attributes["box_type"] | split: '-' | first %}
+{% if cart.attributes["box_type"] == "cookies-box" %}
   {% assign products = collections.meet-the-cookies.products | sort: 'title' %}
 {% else %}
   {% assign products = collections.meet-the-macarons.products | sort: 'title' %}
@@ -28,6 +29,7 @@
   $(function() {
     var ONE_DOZEN = 12;
     var totalQty = {{ product.selected_variant.barcode }};
+    var productType = "{{ product_type }}";
     var currentQty = 0;
     var cookieQtyElement, val;
 
@@ -89,7 +91,7 @@
         if (canAddDozen) $("button.btn-add-dozen").removeClass("invisible");
       }
 
-      $("#selected-cookie-list").children().first().replaceWith("<div>"+currentQty+" of "+totalQty+" cookies filled.</div>");
+      $("#selected-cookie-list").children().first().replaceWith("<div>"+currentQty+" of "+totalQty+" "+productType+" filled.</div>");
       return isBoxFull;
     };
     var updateAndAlignQuantity = function(element) {

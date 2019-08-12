@@ -147,7 +147,7 @@ button:hover.blink-border
   transition: max-width 500ms ease-out 100ms, opacity 500ms ease-out 100ms, color;
 }
 .product__inside__info__link a:hover span.text {
-  color: #d3222a;
+  color: #d22630;
   overflow: hidden;
   opacity: 1;
   max-width: 150px;
@@ -223,12 +223,12 @@ button:hover.blink-border
 
 /**/
 .filter-list > li a:hover {
-  color: #d3222a;
+  color: #d22630;
   text-decoration: none;
 }
 .filter-list li.active > a,
 .filter-list li.open > a {
-  color: #d3222a;
+  color: #d22630;
 }
 /**/
 #modalAddToCartError .modal-content {
@@ -277,7 +277,7 @@ button:hover.blink-border
   color: #9c9b99
 }
 .viewfullinfo:hover {
-  color: #d3222a;
+  color: #d22630;
   text-decoration: none;
 }
 
@@ -393,7 +393,7 @@ span.spr-badge-caption{
   font-size: 0.875em;
   line-height: 1.486em;
   height: 40px;
-  background: #d3222a;
+  background: #d22630;
   color: #ffffff;
   border-radius: 0;
   vertical-align: top;
@@ -408,7 +408,7 @@ span.spr-badge-caption{
 }
 .spr-form-actions .spr-button:hover{
   background-color: #f5f5f5;
-  color: #d3222a;
+  color: #d22630;
 }
 .spr-review, .spr-form {
   border-color: #e5e5e5 !important;
@@ -656,7 +656,7 @@ span.spr-badge-caption{
 
 }
 .custom__info__link a:hover{
-  color:#d3222a;
+  color:#d22630;
 }
 .custom__info__link a:hover span.text{
   width: calc(110px + 50%);
@@ -693,7 +693,7 @@ span.spr-badge-caption{
   color: #333333
 }
 .collapse-block .simple-list .active {
-	color: #d3222a
+	color: #d22630
 }
 /* Menu */
 .dropdown.active .dropdown-menu {
@@ -722,10 +722,10 @@ footer .v-links-list a {
   color: #777777;
 }
 footer .v-links-list a:hover {
-  color: #d3222a;
+  color: #d22630;
 }
 footer .title-under:after {
-  background: #d3222a;
+  background: #d22630;
 }
 footer .border-sep-right:after {
   background: #e5e5e5;
@@ -747,14 +747,14 @@ footer .footer-copyright .row {
   }
 }
 footer .btn--ys {
-  background-color: #d3222a;
+  background-color: #d22630;
   color: #ffffff;
 }
 footer .btn--ys:hover,
 footer .btn--ys:active,
 footer .btn--ys:focus {
   background-color: #ffffff;
-  color: #d3222a;
+  color: #d22630;
 }
 @media (min-width: 768px) {
   footer .subscribe-box-row .mobile-collapse:after,
@@ -772,7 +772,7 @@ footer .btn--ys:focus {
 }
 footer a.color, footer a.color:hover,
 footer .box-address .icon {
-  color: #d3222a;
+  color: #d22630;
 }
 footer hr {
   border-color: #e5e5e5;

@@ -63,11 +63,11 @@
   transform: scale(1.05);
 }
 .widget-hotspot:hover{
-  background: #d3222a;
+  background: #d22630;
   text-decoration: none;
 }
 .hotspot.hotspot--highlighted, .hotspot:hover{
-  background: #d3222a;
+  background: #d22630;
   text-decoration: none;
 }
 .hotspot{
@@ -78,7 +78,7 @@
   text-decoration: none;
 }
 .widget-hotspot{
-  background: #d3222a;
+  background: #d22630;
   color: #FFF;
   border-width: 3px;
 }
@@ -90,7 +90,7 @@
   opacity: .3;
 }
 .loadr-arc-rotate-move .loader:after{
-  border-bottom-color: #d3222a;
+  border-bottom-color: #d22630;
 }
 /* /loader */
 
@@ -120,7 +120,7 @@
   overflow-x: inherit;
 }
 .hotspot-modal .public-hotspot-info-holder .public-hotspot-info .public-hotspot-info__price{
-  color: #d3222a;
+  color: #d22630;
   margin-top: 16px;
   display: inline-block;
 }
@@ -156,7 +156,7 @@
 .snpt-modal.hotspot-modal a:hover,
 .hotspot-modal .modal-dialog .chevron:hover{
   text-decoration: none;
-  color: #d3222a;
+  color: #d22630;
 }
 .widget-hotspot:hover{
   background: #333333;
@@ -169,7 +169,7 @@
   font-family: Ubuntu, sans-serif;
 }
 .hotspot-modal  .public-hotspot-info-holder .public-hotspot-info .public-hotspot-info__btn-buy.snpt-cta-btn{
-  background: #d3222a;
+  background: #d22630;
   color: #fff;
   border-radius: 0 !important;
 }
@@ -223,7 +223,7 @@
   color: #333333 !important;
 }
 .hotspot-modal .hotspot{
-  background: #d3222a;
+  background: #d22630;
   -webkit-transform: scale(1,1);
   -webkit-transition-timing-function: ease-out;
   -webkit-transition-duration: 300ms;
