@@ -1,8 +1,8 @@
 {% assign product_type = cart.attributes["box_type"] | split: '-' | first %}
 {% if cart.attributes["box_type"] == "cookies-box" %}
-  {% assign products = collections.meet-the-cookies.products | sort: 'title' %}
+  {% assign products = collections.todays-cookies.products | sort: 'title' %}
 {% else %}
-  {% assign products = collections.meet-the-macarons.products | sort: 'title' %}
+  {% assign products = collections.todays-macarons.products | sort: 'title' %}
 {% endif %}
 <div class="clearfix"></div>
 <div class="row">

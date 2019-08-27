@@ -1,4 +1,17 @@
 {% if settings.product_item_showqv %}
+{% comment %}Prepare for box variant pricing
+{% assign type = product.type | downcase %}
+type is: {{ type }}
+{% if type == "cookies" %}
+  cookies
+  {% assign box_variants = all_products.cookie-box.variants %}
+{% elsif type == "macarons" %}
+  macarons
+  {% assign box_variants = all_products.macaron-box.variants %}
+{% else %}
+  nil
+  {% assign box_variants = nil %}
+{% endif %}{% endcomment %}
 <div class="modal  modal--bg fade"  id="quickViewModal">
   <div class="modal-dialog white-modal">
     <div class="modal-content container">
@@ -22,14 +35,15 @@
                 {% if settings.quickview_sku or settings.quickview_availability %}<div class="wrapper qwt">
                   {% if settings.quickview_sku %}<div class="product-info__sku pull-left">{{ 'popup_quick_view.general.sku' | t }} <strong class='product-sku'>text</strong></div>{% endif %}
                   {% if settings.quickview_availability %}<div class="product-info__availabilitu{% if settings.quickview_sku %} pull-right{% endif %}">{{ 'popup_quick_view.general.availability' | t }} <strong class='product-availability'>text</strong></div>{% endif %}
-                </div>{% endif %}
+                </div>
+                {% endif %}
                 <div class="product-info__title">
                   <h2 class="product_title"></h2>
                 </div>
+
                 <div class="price-box product-info__price price-part">
                   <span class="price-box__new"></span>
                   <span class="main"></span>
-                  <div class="money-suffix"></div>
                 </div>
 
                 {% if settings.quickview_showrating %}
@@ -148,7 +162,7 @@ jQuery(function($) {
 		$(_parent + ' .rating').append("<span class=\"shopify-product-reviews-badge\" data-id=\"" + product.id + "\"></span>");
 
     // types
-    var PER_DOZEN = ['cookies','macarons'];
+    var BUILD_A_BOX = ['cookies','macarons'];
     var SPECIALTY = ['specialty cookies'];
     var STANDARD = ['pies','cookie box','valentine box'];
 
@@ -196,23 +210,33 @@ jQuery(function($) {
 		var inv_qua = variant.inventory_quantity;
 
 		//price
-        var suffix = '';
-        if (PER_DOZEN.includes(product.type.toLowerCase())) {
-          suffix = "";
-        }
+    //var suffix = '';
 
-        if (!SPECIALTY.includes(product.type.toLowerCase())) {
-          if (variant.price < variant.compare_at_price) {
-              $('.price-part .main').addClass('price-box__old');
-              $('.price-part .price-box__new').show();
-              changePriceValue('.price-part .main', variant.compare_at_price, suffix);
-              changePriceValue('.price-part .price-box__new', variant.price, suffix);
-          } else {
-              $('.price-part .price-box__new').hide();
-              $('.price-part .main').removeClass('price-box__old');
-              changePriceValue('.price-part .main', variant.price, suffix);
-          }
-        }
+    if (BUILD_A_BOX.includes(product.type.toLowerCase())) {
+      var boxHandle = product.type.toLowerCase().slice(0, -1)+'-box';
+      Shopify.getProduct(boxHandle, function(product) {
+        updatePrices(product.variants);
+      });
+    }
+
+    if (STANDARD.includes(product.type.toLowerCase())) {
+      $('.price-part .price-box__new').hide();
+      $('.price-part .main').removeClass('price-box__old');
+      changePriceValue('.price-part .main', variant.price);
+    }
+
+    // if (!SPECIALTY.includes(product.type.toLowerCase())) {
+    //   if (variant.compare_at_price > variant.price) {
+    //       $('.price-part .main').addClass('price-box__old');
+    //       $('.price-part .price-box__new').show();
+    //       changePriceValue('.price-part .main', variant.compare_at_price);
+    //       changePriceValue('.price-part .price-box__new', variant.price);
+    //   } else {
+    //       $('.price-part .price-box__new').hide();
+    //       $('.price-part .main').removeClass('price-box__old');
+    //       changePriceValue('.price-part .main', variant.price);
+    //   }
+    // }
 
 		// Variants select
 		if(product.variants[0].option1.indexOf('Default') == -1) {
@@ -275,7 +299,7 @@ jQuery(function($) {
 		    $('.product-per-dozen').hide();
 			$('.product-available').show();
 			$('.addtocartqv').attr('id', product.id);
-		  } else if (PER_DOZEN.includes(product.type.toLowerCase())) {
+		  } else if (BUILD_A_BOX.includes(product.type.toLowerCase())) {
 		    $('.product-per-dozen').show();
 		    $('.product-available').hide();
 		    $('.product-specialty').hide();
@@ -342,18 +366,28 @@ jQuery(function($) {
 		}
 	}
 
-	function changePriceValue(cell, value, suffix = "") {
+	function changePriceValue(cell, value) {
         cell = $(cell);
         moneyFormat = "{{ shop.money_format }}";
 		cell.html(Shopify.formatMoney(value, moneyFormat));
-        if (suffix != "") {
-          cell.siblings(".money-suffix").text(suffix);
-        }
 	};
 
+  function updatePrices(variants) {
+    moneyFormat = "{{ shop.money_format}}";
+    var div = '<div class="price-box product-info__price price-part">';
+    for (i = 0; i < variants.length; i++) {
+      if (variants[i].available) {
+        if (variants[i].compare_at_price > variants[i].price) {
+          div += '<div class="price-box__new">'+Shopify.formatMoney(variants[i].price, moneyFormat)+'/'+variants[i].title;
+          div += '<span class="price-box__old">'+Shopify.formatMoney(variants[i].compare_at_price, moneyFormat)+'/'+variants[i].title+'</span></div>';
+        } else {
+          div += '<div>'+variants[i].title+' - '+Shopify.formatMoney(variants[i].price)+'</div>';
+        }
+      }
+    }
+    $(".price-part").replaceWith(div);
+  }
 });
-
-
 
 var selectCallbackQv = function(variant, selector) {
 

@@ -25,7 +25,7 @@
             <div class="{{ product_grid }}">
               <div class="product amount-selector">
                 <input id="{{ amount }}-pack" type="radio" name="variant" value="{{ variant.id }}"/>
-                <label for="{{ amount }}-pack" class="pack" style="background: url({{ variant | img_url: '320x320' }}) 100% 100% no-repeat;">
+                <label for="{{ amount }}-pack" class="pack {{ amount }}">
                   <div class="banner">{{ variant.title }}</div>
                   <div class="price">{{ variant.price | money_without_trailing_zeros }}</div>
                 </label>

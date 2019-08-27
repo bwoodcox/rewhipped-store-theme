@@ -2,9 +2,14 @@
 <section class="content separator-section"><div class="container"><hr></div></section>
 {% endif %}
 <section class="container content carousel-products-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="collectiontabs-section" data-autoplay="{{ section.settings.module_autoplay }}" data-speed="{{ section.settings.delay_time }}" data-step="{{ section.settings.step }}">
+  {% if section.settings.show_heading %}
+    <div class="title-box">
+      <h2 class="{% if section.settings.center_heading %}text-center{% else %}text-left{% endif %} text-uppercase title-under">{{ section.settings.heading_text }}</h2>
+    </div>
+  {% endif %}
   <div class="row">
     {% if section.blocks.size > 0 %}
-    
+
     <!-- Nav tabs -->
     <ul class="nav nav-tabs nav-tabs--ys-center text-center" role="tablist">
       {% for block in section.blocks %}
@@ -21,9 +26,9 @@
       </div>
       <div id="{{ section.id }}{{ forloop.index }}-clone" style="display:none">
         {% if section.settings.product_type == 'grid' %}
-        <div class="product-listing">
+        <div class="product-listing" id="bryan">
           {% for product in collection.products limit: section.settings.limit %}
-          <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 col-xl-2">
+          <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
             {% include "product-grid-item" %}
           </div>
           {% endfor %}
@@ -45,6 +50,9 @@
     {% endif %}
   </div>
 </section>
+{% if section.settings.show_bottom_line %}
+<section class="content separator-section"><div class="container"><hr></div></section>
+{% endif %}
 
 {% schema %}
 {
@@ -56,6 +64,30 @@
       "type": "checkbox",
       "id": "show_top_line",
       "label": "Show Top Line",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_heading",
+      "label": "Show Heading",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "center_heading",
+      "label": "Center Heading",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading",
+      "default": "Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bottom_line",
+      "label": "Show Bottom Line",
       "default": false
     },
     {

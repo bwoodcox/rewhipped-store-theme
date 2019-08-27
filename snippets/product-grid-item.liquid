@@ -46,9 +46,10 @@
       {% assign func = "" %}
       {% assign location = "" %}
     {% elsif product.metafields.cart.process == "build_a_box" %}
-      {% assign location = "/pages/who-chooses" %}
+      {% assign location = "/pages/choose-box-type" %}
       {% assign func = "" %}
       {% assign tooltip = "Fill A Box" %}
+      {% assign show_price = false %}
     {% elsif product.metafields.cart.process == "custom_box" %}
       {% assign location = "/collections/be-mine-boxes/" %}
       {% assign func = "" %}

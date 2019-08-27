@@ -3,6 +3,16 @@
   {% assign sale_on = true %}
 {% endif %}
 
+{% comment %}Prepare for box variant pricing{% endcomment %}
+{% if product.metafields.cart.process == "build_a_box" %}
+  {% assign type = product.type | downcase %}
+  {% if type == "cookies" %}
+    {% assign box_variants = all_products.cookie-box.variants %}
+  {% else %}
+    {% assign box_variants = all_products.macaron-box.variants %}
+  {% endif %}
+{% endif %}
+
 {% comment %} Main Image URL. {% endcomment %}
 {% assign main_url_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
 
@@ -75,7 +85,7 @@
   {% if settings.show_upsell_collection %}
   {% assign name_collection = settings.product_upsell_collection %}
   {% if name_collection == blank %}{% assign name_collection = "all" %}{% endif %}{% assign selected_collection = collections[name_collection] %}
-  {% assign _lenght = settings.product_upsell_collection_count | plus: 0 %}
+  {% assign _length = settings.product_upsell_collection_count | plus: 0 %}
   <!-- related products -->
   <section class="content">
     <div class="container">
@@ -89,7 +99,7 @@
       <!-- carousel -->
       <div class="carousel-products row" id="carouselRelated">
         {% assign _product_id = product.id %}
-        {% for product in selected_collection.products limit: _lenght %}{% if _product_id != product.id %}<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-one-six">
+        {% for product in selected_collection.products limit: _length %}{% if _product_id != product.id %}<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-one-six">
         {% include "product-grid-item" collection: selected_collection %}
         </div>{% endif %}{% endfor %}
       </div>

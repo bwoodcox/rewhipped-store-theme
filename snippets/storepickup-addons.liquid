@@ -1,0 +1,31 @@
+{% for item in cart.items %}
+  {% if item.product.type contains 'Pies' %}
+    {% if item.product.has_only_default_variant %}
+      {% if item.product.variants[0].inventory_quantity < 1%}
+        {% if item.product.variants[0].inventory_policy == 'continue' %}
+          {% assign increase_notice = true %}
+        {% endif %}
+      {% endif %}
+    {% elsif item.product.selected_variant.inventory_quantity < 1 %}
+      {% if item.product.selected_variant.inventory_policy == 'continue' %}
+        {% assign increase_notice = true %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% if increase_notice %}
+  {% assign delivery_notice_value = 4 %}
+  {% assign delivery_notice_unit = "hours" %}
+  {% assign delivery_notice_breakpoint = "17:00" %}
+  {% assign delivery_notice_after_breakpoint_value = 20 %}
+  {% assign delivery_notice_after_breakpoint_unit = "hours" %}
+{% endif %}
+
+{% if increase_notice %}
+  {% assign pickup_notice_value = 4 %}
+  {% assign pickup_notice_unit = "hours" %}
+  {% assign pickup_notice_breakpoint = "17:00" %}
+  {% assign pickup_notice_after_breakpoint_value = 20 %}
+  {% assign pickup_notice_after_breakpoint_unit = "hours" %}
+{% endif %}
