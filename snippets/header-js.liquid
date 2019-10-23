@@ -24,17 +24,17 @@
       disableOn: 767,
       type: 'iframe',
       removalDelay: 160,
-      preloader: false,			
+      preloader: false,
       fixedContentPos: false
     });
 
-    // Init All Carousel			
+    // Init All Carousel
     thumbnailsCarousel($j('.product-images-carousel ul'));
     productCarousel($j('#carouselRelated'),6,4,4,2,1);
     productCarousel($j('#mobileGallery'),1,1,1,1,1);
 
     elevateZoom();
-    
+
     productBigCarousel($j('.bigGallery'),3,3,3,2,1);
     elevateZoom1();
     sliderNoZoom();
@@ -72,12 +72,12 @@ function init() {
 		// The latitude and longitude to center the map (always required)
 		center: new google.maps.LatLng({{ map }}),
 
-		// How you would like to style the map. 
+		// How you would like to style the map.
 		// This is where you would paste any style found on Snazzy Maps.
 		styles: [{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#d1d1d1"}]},{"featureType":"transit","stylers":[{"color":"#808080"},{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"visibility":"on"},{"color":"#d1d1d1"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#d1d1d1"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#ffffff"},{"weight":1.8}]},{"featureType":"road.local","elementType":"geometry.stroke","stylers":[{"color":"#d7d7d7"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#ebebeb"}]},{"featureType":"administrative","elementType":"geometry","stylers":[{"color":"#d1d1d1"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"landscape","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#fafafa"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#d6d6d6"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"visibility":"on"},{"color":"#bfbfbf"}]},{"featureType":"poi","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#d6d6d6"}]},{"featureType":"road","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#f1f1f1"}]}]
 	};
 
-	// Get the HTML DOM element that will contain your map 
+	// Get the HTML DOM element that will contain your map
 	// We are using a div with id="map" seen below in the <body>
 	var mapElement = document.getElementById('map');
 
@@ -100,7 +100,7 @@ function init() {
   var $ = jQuery;
   productCarousel($('.megaMenuCarousel_js'),1,1,1,1,1);
   mobileOnlyCarousel();
-  
+
   $j('.bannerCarousel').length && productCarousel($j('.bannerCarousel'),4,3,3,2,1);
 
   /* Work with fullscreen_banners.liquid */
@@ -108,4 +108,57 @@ function init() {
     $('.banner-carousel-added').remove();
   	bannerCarousel($('.banner-carousel'));
   }
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Bakery",
+  "name": "Rewhipped",
+  "image": "https://cdn.shopify.com/s/files/1/2386/4507/files/rewhipped.jpg?1235",
+  "description": "Utah bakery & cookie shop with products including cookies, pies, and macarons.",
+  "@id": "https://rewhipped.com/#localbusiness",
+  "url": "https://rewhipped.com/",
+  "telephone": "(801) 666-6844",
+  "servesCuisine": "Cookies, Pies, Macarons",
+  "acceptsReservations": "false",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "13292 S 5600 W",
+    "addressLocality": "Herriman",
+    "addressRegion": "UT",
+    "postalCode": "84096",
+    "addressCountry": "US"
+  },
+  "aggregateRating": {
+    "@type": "aggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "81"
+  },
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday"
+    ],
+    "opens": "10:00",
+    "closes": "20:00"
+  },{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Friday",
+      "Saturday"
+    ],
+    "opens": "10:00",
+    "closes": "22:00"
+  }],
+  "sameAs": [
+    "https://www.facebook.com/rewhipped",
+    "https://twitter.com/rewhippedutah",
+    "https://www.instagram.com/rewhipped/",
+    "https://www.youtube.com/channel/UCrNFRwSYnCdwprrkqQDmivQ/",
+    "https://www.pinterest.com/rewhipped/"
+  ]
+}
 </script>

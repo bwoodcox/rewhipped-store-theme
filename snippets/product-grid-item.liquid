@@ -56,6 +56,8 @@
       {% assign tooltip = "Select Options" %}
       {% assign show_price = false %}
     {% endif %}
+  {% else %}
+    {% assign show_price = false %}
   {% endif %}
 
   <div class="product__inside">
@@ -209,7 +211,7 @@
     <!-- product price -->
     {% if show_price %}
       {% if sale_on %}
-      	<div class="product__inside__price price-box"><div>{{ product.selected_or_first_available_variant.price | money }}</div><div class="price-box__old">{{ product.selected_or_first_available_variant.compare_at_price | money }}{% if product.metafields.cart.process == "build_a_box" %}<div class="money-suffix"> per dozen</span>{% endif %}</div></div>
+      	<div class="product__inside__price price-box"><div>{{ product.selected_or_first_available_variant.price | money }}</div><div class="price-box__old">{{ product.selected_or_first_available_variant.compare_at_price | money }}</div></div>
       {% else %}
       	<div class="product__inside__price price-box baseprice"><div>{{ product.selected_or_first_available_variant.price | money }}</div><div class="price-box__old hide"></div></div>
       {% endif %}
