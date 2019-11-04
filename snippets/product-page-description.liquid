@@ -16,9 +16,17 @@
   {% endif %}
 </div>
 {% endif %}
-<div class="product-info__title">
+{% for image in product.images %}
+  {% if image.alt == "signature" %}
+    <div class="product-info__title">
+      <img src="{{ image.src | product_img_url: '150x' }}" alt="{{ image.alt }}">
+    </div>
+  {% endif %}
+{% endfor %}
+
+<!-- <div class="product-info__title">
   <h1 itemprop="name">{{ product.title }}</h1>
-</div>
+</div> -->
 {% if settings.show_product_vendor %}
 <div class="product-info__vendor" itemprop="brand">{{ product.vendor }}</div>
 {% endif %}
@@ -176,7 +184,7 @@
     {% endunless %}
 
     <div class="bold_options" data-product-id="{{ product.id }}"></div>
-    
+
     <div class="divider divider--sm"></div>
     <div class="wrapper">
       <div class="pull-left"><span class="qty-label">{{ 'products.product.quantity' | t }}</span></div>
