@@ -1,0 +1,7 @@
+{% if section.settings.slider_id != 'no-slider' %}
+                                          {% include {{section.settings.slider_id}}, slider_id:section.settings.slider_id %}
+                                          {% endif %}
+
+                                          {% schema %}
+                                                {"name":"Revolution Slider","class":"index-section index-section--flush","settings":[{"type":"select","id":"slider_id","label":"Select Slider","default":"no-slider","info":{"en":"Please make sure you click the SAVE button after selecting your slider."},"options":[{"label":"Select Slider","value":"no-slider"},{"label":"Fall Slider","value":"rev_fall-slider"}]}],"presets":[{"name":"Revolution Slider","category":"Image"}]}
+                                          {% endschema %}

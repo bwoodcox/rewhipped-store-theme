@@ -1,0 +1,82 @@
+{% comment %}
+BookThatApp 'Form 4 - Scheduled Time'
+{% endcomment %}
+
+{% if product.metafields.bookthatapp.config %}
+
+{% assign product_in_cart = false %}
+{% for item in cart.items %}
+  {% if item.product.handle == product.handle %}
+    {% assign product_in_cart = true %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+<div class="booking-form" data-product-id={{ product.id }}>
+{% if product_in_cart %}
+    <p id="booking-guard-{{ product.handle }}"><a href="/cart">View Booking</a>.</p>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function(event) {
+        $('#booking-guard-{{ product.handle }}').closest('form[action^="/cart/add"]').find('input:submit, button:submit, .hide-if-in-cart').hide();
+      });
+    </script>
+{% else %}
+    {% comment %}
+    <div class="bta-resource-picker"></div>
+    {% endcomment %}
+
+    <div>
+	  {% capture attribute %}booking-start{% endcapture %}
+	  <label for="{{ attribute }}-{{ product.handle }}">Date:</label>
+	  <input id="{{ attribute }}-{{ product.handle }}" type="text" name="properties[Date]"
+	         class="datepicker bta required bta-load-enable bta-dp-start" disabled="disabled"
+	         data-handle="{{ product.handle }}" data-variant="{{ product.selected_or_first_available_variant.id }}"
+	         data-bta-product-config="{{ product.metafields.bookthatapp.config }}"
+	         data-bta-variant-config="{% for variant in product.variants %}{{ variant.id }}:{{ variant.metafields.bookthatapp.config }}{% unless forloop.last %},{% endunless %}{% endfor %}"
+	         placeholder="Select date..." />
+
+    </div>
+
+    <div class="bta-scheduled-times-widget"
+           data-label="Time:"
+           data-name="Time"
+           data-prompt="Select time..."
+           data-datepicker="{{ attribute }}-{{ product.handle }}">
+          <p class="loading">Loading schedule...</p>
+          <div class="booked-out-message" style="display:none">Sorry, that time is not available.</div>
+    </div>
+
+    <div class="bta-booking-fields"></div>
+
+	<div class="bta-validation-messages" style="display:none">
+		<p class="bta-validation-date-missing">Please select a date</p>
+	</div>
+{% endif %}
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    {% unless bta_configured %}
+    var forms = document.forms;
+    for (var x = 0; x < forms.length; x++) {
+      if (forms[x].action.indexOf('/cart/add') > -1) {
+        // prevent form submit until bta has finished loading
+        forms[x].addEventListener("submit", function (event) {
+          // check if bta has loaded
+          if (!this.classList.contains("bta-active")) {
+            event.preventDefault();
+          }
+        }, true);
+      }
+    }
+
+    var bta = {
+      productId: {{ product.id }}
+    }
+
+    {% assign bta_configured = true %}
+    {% endunless %}
+  });
+</script>
+{% endif %}
