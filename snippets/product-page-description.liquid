@@ -1,8 +1,12 @@
 {% assign inv_man = product.selected_or_first_available_variant.inventory_management %}{% assign inv_qua = product.selected_or_first_available_variant.inventory_quantity %}
 {% assign is_holiday_product = false %}
+{% assign is_holiday_box = false %}
 {% for collection in product.collections %}
   {% if collection.title contains "Holiday Family" %}
     {% assign is_holiday_product = true %}
+  {% endif %}
+  {% if collection.title contains "Holiday Boxes" %}
+    {% assign is_holiday_box = true %}
   {% endif %}
 {% endfor %}
 
@@ -16,13 +20,19 @@
   {% endif %}
 </div>
 {% endif %}
-{% for image in product.images %}
-  {% if image.alt == "signature" %}
-    <div class="product-info__title">
-      <img src="{{ image.src | product_img_url: '150x' }}" alt="{{ image.alt }}">
-    </div>
-  {% endif %}
-{% endfor %}
+{% if is_holiday_box %}
+  <div class="product-info__title">
+    <h1 itemprop="name">{{ product.title }}</h1>
+  </div>
+{% else %}
+  {% for image in product.images %}
+    {% if image.alt == "signature" %}
+      <div class="product-info__title">
+        <img src="{{ image.src | product_img_url: '150x' }}" alt="{{ image.alt }}">
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endif %}
 
 <!-- <div class="product-info__title">
   <h1 itemprop="name">{{ product.title }}</h1>
