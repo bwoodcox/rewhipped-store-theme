@@ -64,7 +64,12 @@
                     <li class="visible-xs">
                       <span>{{ 'cart.label.quantity' | t }}</span>
                       <span class="shopping-cart-table__input">
-                        <input type="text" name="updates[]" id="updates_{{ item.id }}" class="form-control input-mobile" value="{{ item.quantity }}" min="1" max="{{ inv_qua }}">
+                        {% if item.product.metafields.bookthatapp.config %}
+                          {{ item.quantity }}
+                          <input type="hidden" name="updates[]" id="updates_{{ item.id }}" class="form-control input-mobile" value="{{ item.quantity }}" min="1" max="{{ inv_qua }}">
+                        {% else %}
+                          <input type="text" name="updates[]" id="updates_{{ item.id }}" class="form-control input-mobile" value="{{ item.quantity }}" min="1" max="{{ inv_qua }}">
+                        {% endif %}
                       </span>
                     </li>
                     <li class="visible-xs">
@@ -83,7 +88,12 @@
                 </td>
                 <td>
                   <div class="shopping-cart-table__input">
-                    <input type="number" name="updates[]" id="updates_{{ item.id }}" class="form-control input-desktop" value="{{ item.quantity }}" min="1" max="{{ inv_qua }}" title="{% if inv_qua < 100000 %}{{inv_qua}} {{ 'products.product.in_stock' | t }}{% else %}{{ 'products.product.many_in_stock' | t }}{% endif %}">
+                    {% if item.product.metafields.bookthatapp.config %}
+                      {{ item.quantity }}
+                      <input type="hidden" name="updates[]" id="updates_{{ item.id }}" class="form-control input-desktop" value="{{ item.quantity }}" min="1" max="{{ inv_qua }}" title="{% if inv_qua < 100000 %}{{inv_qua}} {{ 'products.product.in_stock' | t }}{% else %}{{ 'products.product.many_in_stock' | t }}{% endif %}">
+                    {% else %}
+                      <input type="number" name="updates[]" id="updates_{{ item.id }}" class="form-control input-mobile" value="{{ item.quantity }}" min="1" max="{{ inv_qua }}">
+                    {% endif %}
                   </div>
                 </td>
                 <td>

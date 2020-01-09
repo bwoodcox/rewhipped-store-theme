@@ -1,12 +1,16 @@
 {% assign inv_man = product.selected_or_first_available_variant.inventory_management %}{% assign inv_qua = product.selected_or_first_available_variant.inventory_quantity %}
 {% assign is_holiday_product = false %}
 {% assign is_holiday_box = false %}
+{% assign is_baking_school = false %}
 {% for collection in product.collections %}
   {% if collection.title contains "Holiday Family" %}
     {% assign is_holiday_product = true %}
   {% endif %}
   {% if collection.title contains "Holiday Boxes" %}
     {% assign is_holiday_box = true %}
+  {% endif %}
+  {% if collection.title contains "Baking School" %}
+    {% assign is_baking_school = true %}
   {% endif %}
 {% endfor %}
 
@@ -20,7 +24,7 @@
   {% endif %}
 </div>
 {% endif %}
-{% if is_holiday_box %}
+{% if is_holiday_box or is_baking_school %}
   <div class="product-info__title">
     <h1 itemprop="name">{{ product.title }}</h1>
   </div>
@@ -173,11 +177,14 @@
 
   {% unless is_holiday_product %}
   <form id="add-item-form" action="/cart/add" method="post">
+    {% if is_baking_school %}
+      {% include "booking-form" %}
+    {% endif %}
     {% if product.available %}
 
     {% unless product.variants[0].option1 contains "Default" %}
     <div>
-      {% if product.options.size == 1 %}
+    {% if product.options.size == 1 %}
       <div class="selector-wrapper"><label>{{ product.options | first }}</label></div>
       {% endif %}
       <select id="product-select" name="id">
@@ -197,8 +204,10 @@
 
     <div class="divider divider--sm"></div>
     <div class="wrapper">
-      <div class="pull-left"><span class="qty-label">{{ 'products.product.quantity' | t }}</span></div>
-      <div class="pull-left"><input type="text" name="quantity" class="input--ys qty-input pull-left" value="1"></div>
+      {% unless is_baking_school %}
+        <div class="pull-left"><span class="qty-label">{{ 'products.product.quantity' | t }}</span></div>
+        <div class="pull-left"><input type="text" name="quantity" class="input--ys qty-input pull-left" value="1"></div>
+      {% endunless %}
       <div class="pull-left"><button type="submit" class="btn btn--ys btn--xxl addtocart">{{ 'products.product.add_to_cart_html' | t }}</button></div>
     </div>
     <script>
