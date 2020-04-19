@@ -201,10 +201,10 @@
     <!-- visible only in row-view mode  row-mode-visible-->
     {% if product.description contains "[smallDescription]" %}
  	<!--div class="divider divider--xs product-info__divider hidden-xs"></div-->
-	  <div class="product__inside__description product-short-description">
+  	  <div class="product__inside__description product-short-description">
         {% include "get-content-with-key" content: product.description key: "[smallDescription]" %}
-  	  </div>
-  	{% endif %}
+    	</div>
+    {% endif %}
 
     <!--div class="product__inside__description product-short-description">{{ product.metafields.description.short }}</div-->
     <!-- /product description -->

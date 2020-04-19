@@ -2,6 +2,7 @@
 {% assign is_holiday_product = false %}
 {% assign is_holiday_box = false %}
 {% assign is_baking_school = false %}
+{% assign signature_found = false %}
 {% for collection in product.collections %}
   {% if collection.title contains "Holiday Family" %}
     {% assign is_holiday_product = true %}
@@ -24,7 +25,23 @@
   {% endif %}
 </div>
 {% endif %}
-{% if is_holiday_box or is_baking_school %}
+<!-- product name -->
+{% for image in product.images %}
+  {% if image.alt == "signature" %}
+    {% assign signature_found = true %}
+    <div class="product-info__title">
+      <img src="{{ image.src | product_img_url: '150x' }}" alt="{{ image.alt }}">
+    </div>
+  {% endif %}
+{% endfor %}
+{% if signature_found == false %}
+  <div class="product-info__title">
+    <h1 itemprop="name">{{ product.title }}</h1>
+  </div>
+{% endif %}
+<!-- /product name -->
+
+<!-- {% if is_holiday_box or is_baking_school %}
   <div class="product-info__title">
     <h1 itemprop="name">{{ product.title }}</h1>
   </div>
@@ -36,7 +53,7 @@
       </div>
     {% endif %}
   {% endfor %}
-{% endif %}
+{% endif %} -->
 
 <!-- <div class="product-info__title">
   <h1 itemprop="name">{{ product.title }}</h1>

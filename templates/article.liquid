@@ -49,7 +49,7 @@
       <div style="position: relative;"><div id="{% if article.comments.size > 0 %}comments{% else %}addcomment{% endif %}" style="position: absolute; top: -190px;"></div></div>
       {% if article.comments.size > 0 or comment and comment.created_at and comment.status != 'unapproved' %}
       {% paginate article.comments by 100 %}
-      <h3 class="title-aside text-uppercase">{{ 'blogs.article.comments_title' | t: comments_count: article.comments.size }}</h3>
+      <h3 class="title-aside text-uppercase">{{ 'blogs.article.comments_title' | t: comments_count: article.comments.size, article_title: article.title }}</h3>
       {% if comment and comment.created_at and comment.status != 'unapproved' %}
       <div id="comment-{{ comment.id }}" class="comments__comment">
         <!-- comments -->

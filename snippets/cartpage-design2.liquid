@@ -125,7 +125,20 @@
         <div class="divider visible-sm visible-xs"></div>
       </section>
       <aside class="col-md-4 col-lg-4 shopping_cart-aside">
-        <div id="storePickupApp"></div>
+        {% assign cart_contains_booking_items = false %}
+        {% assign cart_contains_physical_items = false %}
+
+        {% for item in cart.items %}
+         {% if item.product.metafields.bookthatapp.config %}
+           {% assign cart_contains_booking_items = true %}
+         {% else %}
+           {% assign cart_contains_physical_items = true %}
+         {% endif %}
+        {% endfor %}
+
+        {% if cart_contains_physical_items %}
+          <div id="storePickupApp"></div>
+        {% endif %}
 
         {% if settings.shipping_calculator %}
         <div class="collapse-block open card card--padding fill-bg">

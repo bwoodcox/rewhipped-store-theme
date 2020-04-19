@@ -1,6 +1,6 @@
 {% if settings.product_item_showqv %}
 {% comment %}Prepare for box variant pricing
-{% assign type = product.type | downcase %}
+{% assign type = item.product.type | downcase %}
 type is: {{ type }}
 {% if type == "cookies" %}
   cookies
@@ -66,7 +66,7 @@ type is: {{ type }}
                     <div class="divider divider--sm"></div>
                     <div class="wrapper">
                       <div class="pull-left control-console"><span class="qty-label">{{ 'products.product.quantity' | t }}</span></div>
-                      <div class="pull-left control-console"><input type="text" name="quantity" class="input--ys qty-input pull-left" value="1"></div>
+                      <div class="pull-left control-console"><div class="qty">1</div><input type="text" name="quantity" class="input--ys qty-input pull-left" value="1"></div>
                       <div class="pull-left"><button type="submit" class="btn btn--ys btn--xxl addtocartqv">{{ 'popup_quick_view.general.add_to_cart_html' | t }}</button></div>
                     </div>
                     <script>
@@ -165,6 +165,7 @@ jQuery(function($) {
     var BUILD_A_BOX = ['cookies','macarons'];
     var SPECIALTY = ['specialty cookies'];
     var STANDARD = ['pies','cookie box','valentine box'];
+    var COURSE = ['course'];
 
 		//check variants
 		var variant = '';
@@ -223,6 +224,15 @@ jQuery(function($) {
       $('.price-part .price-box__new').hide();
       $('.price-part .main').removeClass('price-box__old');
       changePriceValue('.price-part .main', variant.price);
+      $('qty').hide();
+    }
+
+    if (COURSE.includes(product.type.toLowerCase())) {
+      $('.price-part .price-box__new').hide();
+      $('.price-part .main').removeClass('price-box__old');
+      changePriceValue('.price-part .main', variant.price);
+      $('.qty-input').prop('type','hidden');
+      $('.qty').show();
     }
 
     // if (!SPECIALTY.includes(product.type.toLowerCase())) {
@@ -297,8 +307,8 @@ jQuery(function($) {
 		  if (STANDARD.includes(product.type.toLowerCase())) {
 		    $('.product-specialty').hide();
 		    $('.product-per-dozen').hide();
-			$('.product-available').show();
-			$('.addtocartqv').attr('id', product.id);
+			  $('.product-available').show();
+			  $('.addtocartqv').attr('id', product.id);
 		  } else if (BUILD_A_BOX.includes(product.type.toLowerCase())) {
 		    $('.product-per-dozen').show();
 		    $('.product-available').hide();
@@ -307,12 +317,16 @@ jQuery(function($) {
 		    $('.product-specialty').show();
 		    $('.product-per-dozen').hide();
 		    $('.product-available').hide();
-          }
+      } else if (COURSE.includes(product.type.toLowerCase())) {
+        $('.product-specialty').hide();
+		    $('.product-per-dozen').hide();
+			  $('.product-available').hide();
+      }
 		} else {
 			$('.product-available').hide();
 		    $('.product-per-dozen').hide();
 		    $('.product-specialty').hide();
-			$('.product-disable').show();
+			  $('.product-disable').show();
 		}
 
 		if (product.available && product.variants[0].option1.indexOf('Default') == -1) {
